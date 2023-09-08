@@ -2,14 +2,6 @@ Describe 'New-RepositoryVersion' {
     Context 'DefaultBehavior' {
         BeforeEach {
             Mock -ModuleName ConventionalVersioning gh { return '{"tagName": "1.2.3"}' }
-            Mock -ModuleName ConventionalCommits ConvertTo-ConventionalCommitHeader {
-                return @{
-                    Type        = 'fix'
-                    Scope       = 'scope'
-                    Modifier    = '!'
-                    Description = 'description'
-                }
-            }
         }
         
         It 'Should parse a loose message' -ForEach @(
