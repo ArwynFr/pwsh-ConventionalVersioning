@@ -7,7 +7,7 @@ on:
 
 jobs:
   deployment:
-    uses: ArwynFr/ArwynFr/workflows/pwsh-deployment.yaml@main
+    uses: ArwynFr/ArwynFr/.github/workflows/pwsh-deployment.yaml@main
     with:
       manifest: ./ConventionalCommits/ConventionalCommits.psd1
       source: ./ConventionalCommits/
