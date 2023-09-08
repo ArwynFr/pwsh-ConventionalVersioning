@@ -11,5 +11,7 @@ jobs:
     with:
       manifest: ./ConventionalVersioning/ConventionalVersioning.psd1
       source: ./ConventionalVersioning/
+      tests: ./tests/Start-Tests.ps1
     secrets:
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
       PSGALLERY_APIKEY: ${{ secrets.PSGALLERY_APIKEY }}
