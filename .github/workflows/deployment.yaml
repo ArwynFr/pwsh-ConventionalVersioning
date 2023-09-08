@@ -9,7 +9,7 @@ jobs:
   deployment:
     uses: ArwynFr/ArwynFr/.github/workflows/pwsh-deployment.yaml@main
     with:
-      manifest: ./ConventionalCommits/ConventionalCommits.psd1
-      source: ./ConventionalCommits/
+      manifest: ./ConventionalVersioning/ConventionalVersioning.psd1
+      source: ./ConventionalVersioning/
     secrets:
       PSGALLERY_APIKEY: ${{ secrets.PSGALLERY_APIKEY }}
