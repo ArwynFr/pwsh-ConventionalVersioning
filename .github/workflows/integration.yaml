@@ -1,0 +1,14 @@
+name: continuous integration
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+jobs:
+  integration:
+    uses: ArwynFr/ArwynFr/workflows/pwsh-integration.yaml@main
+    with:
+      tests: tests/Start-Tests.ps1
+    secrets:
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}

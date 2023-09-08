@@ -1,0 +1,15 @@
+name: continuous deployment
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  deployment:
+    uses: ArwynFr/ArwynFr/workflows/pwsh-deployment.yaml@main
+    with:
+      manifest: ./ConventionalCommits/ConventionalCommits.psd1
+      source: ./ConventionalCommits/
+    secrets:
+      PSGALLERY_APIKEY: ${{ secrets.PSGALLERY_APIKEY }}

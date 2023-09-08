@@ -1,0 +1,58 @@
+= ConventionalVersioning
+
+ConventionalVersioning is a pwsh module used for handling GitHub relases based on conventional commits.
+
+image:https://img.shields.io/powershellgallery/v/ConventionalVersioning?style=for-the-badge[PowerShell Gallery] image:https://img.shields.io/powershellgallery/dt/ConventionalVersioning?style=for-the-badge[PowerShell Gallery] 
+
+== Rules and standards
+
+The following documents provide additional information on rules and standards applying to this project :
+
+- link:/LICENSE[MIT License]
+
+== How to use the module
+
+This module contains the following commands :
+
+=== New-RepositoryVersion
+
+Calculates the new Semantic Version of the repository based on the current semver (from latest gh release) and a commit message using conventional commits.
+
+```Powershell
+New-RepositoryVersion
+    [-RepositoryName] <string>
+    [[-CommitMessage] <string>]
+    [-FeatUpgradesMinor]
+    [-AllowAdditionalModifiers]
+    [-StrictTypes]
+    [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+`-RepositoryName`:: *Required*. Name of the GitHub repository for which to read the current version (from the latest gh release).
+
+`-CommitMessage`:: *Required*. Commit message using conventional commits format.
+
+`-FeatUpgradesMinor`:: *Switch*. If true, the feat: type will do a minor upgrade ; if false, it will do a patch upgrade.
+
+`-AllowAdditionalModifiers`:: *Switch*. If true the command will allow two more modifiers. These behave like '!' for major : '+' for minor, '-' for patch.
+
+`-StrictTypes`:: *Switch*. If true the command will throw if a custom type is used ; only the list on conventional commits are allowed.
+
+=== New-GitHubRelease
+
+Create a new release on a GitHub repository with a given version and optional additional files.
+
+```Powershell
+New-GitHubRelease
+    [-RepositoryName] <string>
+    [-NextVersion] <semver>
+    [[-Pattern] <string>]
+    [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+`-RepositoryName`:: *Required*. Name of the GitHub repository for the new relaese.
+
+`-NextVersion`:: *Required*. Version for the new release (generally calculated from `New-RepositoryVersion`)
+
+`-Pattern`:: *Optional*. Path of additional files to upload with the release. The release will always contain an archive with the repository sources.
+
