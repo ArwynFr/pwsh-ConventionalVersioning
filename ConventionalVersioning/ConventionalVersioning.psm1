@@ -10,8 +10,9 @@ function Get-RepositoryVersion {
     $PrevErrorActionPreference = $ErrorActionPreference
     $ErrorActionPreference = 'silentlycontinue'
     $currentVersionNumber = (gh release view --json tagName --repo $RepositoryName | convertfrom-json).TagName
-    $currentVersion = [semver]::new($currentVersionNumber)
+    $currentVersion = if ($null -eq $currentVersionNumber) { $null } else { [semver]::new($currentVersionNumber) }
     $ErrorActionPreference = $PrevErrorActionPreference
+    $global:LASTEXITCODE = 0
     return $currentVersion
 }
 
@@ -83,8 +84,8 @@ function New-RepositoryVersion {
     }
     $bumpType = Get-VersionBumpType @parameters
     $currentVersion = Get-RepositoryVersion -RepositoryName "$RepositoryName"
-    $nextVersion = $currentVersion | Step-SemVer -BumpType $bumpType
-
+    $nextVersion = if ($null -eq $currentVersion) { '0.1.0' } else { $currentVersion | Step-SemVer -BumpType $bumpType }
+    
     "current-version=$currentVersion" >> $env:GITHUB_OUTPUT
     "next-version=$nextVersion" >> $env:GITHUB_OUTPUT
     "bump-type=$bumpType" >> $env:GITHUB_OUTPUT
